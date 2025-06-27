@@ -1,5 +1,6 @@
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 
 function App() {
     const path = window.location.pathname;
@@ -8,11 +9,7 @@ function App() {
         return <Dashboard />;
     }
 
-    return (
-        <div>
-            <h1 className="text-3xl font-bold underline">Hello</h1>
-        </div>
-    );
+    return <Home />;
 }
 
 export default App;
