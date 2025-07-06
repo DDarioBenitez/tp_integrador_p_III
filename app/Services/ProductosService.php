@@ -31,7 +31,6 @@ class ProductosService
     {
         $producto = Producto::findOrFail($id);
         $producto->delete();
-        return $producto;
     }
 
     public function getProductosByCategoria($categoria)

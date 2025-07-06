@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($req->only('email', 'password'), $req->boolean('remember'))) {
             $req->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         }
         return back()->withErrors([
             'email' => 'Credenciales incorrectas',

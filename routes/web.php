@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('Dashboard', [
             'pedidos' => app(\App\Services\PedidosService::class)->getAllPedidos(),
             'productos' => app(\App\Services\ProductosService::class)->getAllProductos(),
+            'usuarios' => \App\Models\User::select('id', 'name', 'email')->get(),
         ]);
     })->name('dashboard');
 

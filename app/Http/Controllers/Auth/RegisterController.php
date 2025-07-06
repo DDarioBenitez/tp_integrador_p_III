@@ -32,6 +32,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'USER',
         ]);
 
         if (!$user) {
@@ -43,7 +44,7 @@ class RegisterController extends Controller
 
         auth()->login($user);
 
-        return redirect('/dashboard');
+        return redirect('/');
     }
 
 }

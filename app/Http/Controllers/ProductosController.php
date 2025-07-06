@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ProductosService;
+use Inertia\Inertia;
 
 class ProductosController extends Controller
 {
@@ -27,23 +28,21 @@ class ProductosController extends Controller
             'imagen' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $producto = $this->productosService->createProducto($validated);
+        $this->productosService->createProducto($validated);
 
-        return response()->json([
-            'producto' => $producto,
-            'success' => 'Producto creado'
-        ]);
+        return redirect()->route('dashboard')->with('success', 'Producto creado correctamente');
     }
+
 
     public function deleteProducto($id)
     {
         $this->productosService->deleteProducto($id);
 
-        return response()->json([
-            'id' => $id,
-            'success' => 'Producto eliminado'
-        ]);
+        return Inertia::location(route('dashboard'));
     }
+
+
+
 
     public function updateProducto(Request $request, $id)
     {
@@ -58,11 +57,9 @@ class ProductosController extends Controller
             'imagen' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $producto = $this->productosService->updateProducto($id, $validated);
+        $this->productosService->updateProducto($id, $validated);
 
-        return response()->json([
-            'producto' => $producto,
-            'success' => 'Producto actualizado'
-        ]);
+        return redirect()->route('dashboard')->with('success', 'Producto actualizado correctamente');
     }
+
 }

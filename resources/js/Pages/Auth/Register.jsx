@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import { FaBox } from "react-icons/fa";
-import InputField from "../../Components/UI/InputField";
+import InputField from "../../Components/UI/Shared/InputField";
 
 export default function Register({ errors }) {
     const [values, setValues] = useState({
@@ -28,7 +28,7 @@ export default function Register({ errors }) {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <div className="bg-white p-8 rounded-lg shadow-md w-full m-8 md:m-0 md:max-w-md">
                 <div className="flex justify-center">
                     <div className="p-4 bg-primary rounded-xl mb-6">
                         <FaBox className="h-6 w-6 text-white mb-0" />

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\PedidosService;
+use Inertia\Inertia;
 
 class PedidosController extends Controller
 {
@@ -31,12 +32,10 @@ class PedidosController extends Controller
             'items.*.precio' => ['required', 'numeric', 'min:0'],
         ]);
 
-        $pedido = $this->pedidosService->createPedidoConItems($validated);
+        $this->pedidosService->createPedidoConItems($validated);
 
-        return response()->json([
-            'pedido' => $pedido->load('productos'),
-            'success' => 'Pedido creado'
-        ]);
+        return Inertia::location(route('dashboard'));
+
     }
 
     public function updatePedido(Request $request, $id)
@@ -55,21 +54,17 @@ class PedidosController extends Controller
             'items.*.precio' => ['required_with:items', 'numeric', 'min:0'],
         ]);
 
-        $pedido = $this->pedidosService->updatePedidoConItems($id, $validated);
+        $this->pedidosService->updatePedidoConItems($id, $validated);
 
-        return response()->json([
-            'pedido' => $pedido->load('productos'),
-            'success' => 'Pedido actualizado'
-        ]);
+        return Inertia::location(route('dashboard'));
+
     }
 
     public function deletePedido($id)
     {
         $this->pedidosService->deletePedido($id);
 
-        return response()->json([
-            'id' => $id,
-            'success' => 'Pedido eliminado'
-        ]);
+        return Inertia::location(route('dashboard'));
+
     }
 }

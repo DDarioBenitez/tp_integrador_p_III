@@ -24,7 +24,7 @@ export default function Login({ errors }) {
 
     return (
         <div className="w-full h-screen flex items-center justify-center bg-primaryBg">
-            <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200 space-y-6">
+            <div className="w-full m-8 md:m-0 md:max-w-md  bg-white p-8 rounded-xl shadow-lg border border-gray-200 space-y-6">
                 <div className="flex justify-center">
                     <div className="p-4 bg-primary rounded-xl mb-6">
                         <FaBox className="h-6 w-6 text-white mb-0" />
