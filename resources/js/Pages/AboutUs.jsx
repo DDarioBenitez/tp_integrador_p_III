@@ -1,29 +1,29 @@
 const team = [
     {
-        name: "Juan Pérez",
+        name: "Darío Benítez",
         role: "Desarrollador Fullstack",
         description:
             "Apasionado por el código limpio y las soluciones escalables.",
-        image: "/images/juan.jpg", // Cambiá por la ruta real
+        image: "https://avatars.githubusercontent.com/u/129878552?v=4", // Cambiá por la ruta real
     },
     {
-        name: "María García",
-        role: "Diseñadora UX/UI",
+        name: "Belén Rodríguez",
+        role: "Desarrollador fullstack",
         description: "Crea experiencias que combinan funcionalidad y estética.",
-        image: "/images/maria.jpg",
+        image: "https://avatars.githubusercontent.com/u/143747582?s=400&u=e49302fc6c414bd5fe43b5eb11ba708eefa78e3f&v=4",
     },
     {
-        name: "Carlos López",
-        role: "Especialista en Marketing",
-        description: "Ayuda a posicionar nuestros productos en el mercado.",
-        image: "/images/carlos.jpg",
+        name: "Bruno González",
+        role: "Desarrollador fullstack",
+        description: "Encargado de las vistas del sistema, estilos, etc.",
+        image: "https://avatars.githubusercontent.com/u/207612737?v=4",
     },
     {
-        name: "Ana Torres",
-        role: "Project Manager",
+        name: " Dante Salinas",
+        role: "Desarrollador fullstack",
         description:
-            "Organiza y lidera los proyectos con eficiencia y empatía.",
-        image: "/images/ana.jpg",
+            "Gestiona la estructura de datos y optimiza consultas para un rendimiento óptimo.",
+        image: "https://avatars.githubusercontent.com/u/206265191?v=4",
     },
 ];
 
