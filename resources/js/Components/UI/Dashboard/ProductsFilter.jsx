@@ -8,6 +8,15 @@ const ProductFilters = ({ onChange }) => {
         priceMax: "",
     });
 
+    const categorias = [
+        "computadoras",
+        "accesorios",
+        "monitores",
+        "tablets",
+        "audio",
+        "impresoras",
+    ];
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         const updated = { ...filters, [name]: value };
@@ -32,9 +41,12 @@ const ProductFilters = ({ onChange }) => {
                 onChange={handleChange}
             >
                 <option value="">Todas las categorías</option>
-                <option value="computadoras">Computadoras</option>
-                <option value="electronics">Electrónicos</option>
-                <option value="accesorios">Accesorios</option>
+                {categorias.map((categoria) => (
+                    <option key={categoria} value={categoria}>
+                        {categoria.slice(0, 1).toUpperCase() +
+                            categoria.slice(1).toLowerCase()}
+                    </option>
+                ))}
             </select>
 
             <input

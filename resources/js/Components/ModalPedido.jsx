@@ -15,7 +15,7 @@ const ModalPedido = ({
         total: "",
         direccion_entrega: "",
         telefono_contacto: "",
-        metodo_pago: "tarjeta",
+        metodo_pago: "",
         nombre_destinatario: "",
         dni_destinatario: "",
         items: [],
@@ -100,6 +100,8 @@ const ModalPedido = ({
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-xl w-full max-w-lg relative">
+                {console.log("pedido", pedido)}
+
                 <button
                     onClick={onClose}
                     className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-100 text-gray-500"

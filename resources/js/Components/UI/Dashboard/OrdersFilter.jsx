@@ -50,10 +50,7 @@ const OrderFilters = ({ onChange }) => {
                 onChange={handleChange}
             >
                 <option value="">Todos los métodos</option>
-                <option value="tarjeta_credito">Tarjeta crédito</option>
-                <option value="tarjeta_debito">Tarjeta débito</option>
-                <option value="paypal">PayPal</option>
-                <option value="transferencia_bancaria">Transferencia</option>
+                <option value="tarjeta">Tarjeta</option>
                 <option value="efectivo">Efectivo</option>
             </select>
         </div>

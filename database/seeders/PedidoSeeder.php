@@ -21,7 +21,7 @@ class PedidoSeeder extends Seeder
                 'total' => 0, // Lo calcularemos en PedidoProductoSeeder
                 'direccion_entrega' => 'Calle Ejemplo ' . rand(1, 999),
                 'telefono_contacto' => '1234567' . rand(10, 99),
-                'metodo_pago' => ['TARJETA', 'EFECTIVO'][rand(0, 1)],
+                'metodo_pago' => ['tarjeta', 'efectivo'][rand(0, 1)],
                 'nombre_destinatario' => 'Destinatario ' . $i,
                 'dni_destinatario' => (string) rand(10000000, 99999999),
                 'created_at' => now(),

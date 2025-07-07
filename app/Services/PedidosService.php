@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Pedido;
+use Log;
 
 class PedidosService
 {
@@ -41,6 +42,8 @@ class PedidosService
     public function updatePedidoConItems($id, array $data)
     {
         $pedido = Pedido::findOrFail($id);
+
+        Log::info('Datos validados', $data);
 
         $pedido->update([
             'estado' => $data['estado'],

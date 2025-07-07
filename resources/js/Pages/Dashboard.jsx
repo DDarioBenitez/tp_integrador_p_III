@@ -90,19 +90,96 @@ const Dashboard = ({ productos, pedidos, usuarios }) => {
         }
     };
 
+    // FILTRO DE PEDIDOS
+    const filteredOrders = orders.filter((o) => {
+        const search = (orderFilter.search || "").toLowerCase();
+        const status = (orderFilter.status || "").toLowerCase();
+        const payment = (orderFilter.payment || "").toLowerCase();
+
+        const matchesSearch =
+            !search ||
+            o.id.toString().includes(search) ||
+            o.nombre_destinatario?.toLowerCase().includes(search);
+
+        const matchesStatus = !status || o.estado?.toLowerCase() === status;
+
+        const matchesPayment =
+            !payment || o.metodo_pago?.toLowerCase() === payment;
+
+        const matchesDate =
+            !orderFilter.date ||
+            (o.created_at &&
+                new Date(o.created_at).toISOString().slice(0, 10) ===
+                    orderFilter.date);
+
+        return matchesSearch && matchesStatus && matchesPayment && matchesDate;
+    });
+
+    // FILTRO DE PRODUCTOS
+    const filteredProducts = products.filter((p) => {
+        const search = (productFilters.search || "").toLowerCase();
+        const category = (productFilters.category || "").toLowerCase();
+        const priceMin = parseFloat(productFilters.priceMin || "0");
+        const priceMax = parseFloat(productFilters.priceMax || "Infinity");
+
+        const matchesSearch =
+            !search || p.nombre?.toLowerCase().includes(search);
+
+        const matchesCategory =
+            !category || p.categoria?.toLowerCase() === category;
+
+        const matchesPriceMin = isNaN(priceMin) || p.precio >= priceMin;
+
+        const matchesPriceMax = isNaN(priceMax) || p.precio <= priceMax;
+
+        return (
+            matchesSearch &&
+            matchesCategory &&
+            matchesPriceMin &&
+            matchesPriceMax
+        );
+    });
+
     return (
         <div className="min-h-screen flex flex-col bg-gray-50">
             <NavBar />
             <main className="flex-1 flex flex-col overflow-hidden p-2 sm:p-4">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 overflow-hidden">
+                    {/* Stats arriba en mobile */}
+                    <aside className="flex flex-col gap-4 lg:order-2">
+                        <StatsCard
+                            title="Productos"
+                            count={products.length}
+                            color="blue"
+                            onClick={() =>
+                                setVisibleTable((prev) =>
+                                    prev === "products" ? null : "products"
+                                )
+                            }
+                            icon={<FaBox />}
+                        />
+                        <StatsCard
+                            title="Pedidos"
+                            count={orders.length}
+                            color="green"
+                            onClick={() =>
+                                setVisibleTable((prev) =>
+                                    prev === "orders" ? null : "orders"
+                                )
+                            }
+                            icon={<IoCart />}
+                        />
+                    </aside>
+
+                    {/* Tablas */}
                     <div className="lg:col-span-3 flex flex-col gap-4 overflow-hidden">
                         {(visibleTable === null ||
                             visibleTable === "products") && (
                             <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-lg shadow">
                                 <ProductFilters onChange={setProductFilters} />
-                                <div className="flex-1 ">
+                                <div className="flex-1">
                                     <ProductsTable
-                                        products={products}
+                                        products={filteredProducts}
                                         onAddClick={abrirCrearProducto}
                                         onViewClick={abrirVerProducto}
                                         onEditClick={abrirEditarProducto}
@@ -116,9 +193,9 @@ const Dashboard = ({ productos, pedidos, usuarios }) => {
                             visibleTable === "orders") && (
                             <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-lg shadow">
                                 <OrderFilters onChange={setOrderFilter} />
-                                <div className="flex-1 ">
+                                <div className="flex-1">
                                     <OrdersTable
-                                        orders={orders}
+                                        orders={filteredOrders}
                                         onAddClick={abrirCrearPedido}
                                         onViewClick={abrirVerPedido}
                                         onEditClick={abrirEditarPedido}
@@ -128,23 +205,6 @@ const Dashboard = ({ productos, pedidos, usuarios }) => {
                             </div>
                         )}
                     </div>
-
-                    <aside className="flex flex-col gap-4">
-                        <StatsCard
-                            title="Productos"
-                            count={products.length}
-                            color="blue"
-                            onClick={() => setVisibleTable("products")}
-                            icon={<FaBox />}
-                        />
-                        <StatsCard
-                            title="Pedidos"
-                            count={orders.length}
-                            color="green"
-                            onClick={() => setVisibleTable("orders")}
-                            icon={<IoCart />}
-                        />
-                    </aside>
                 </div>
             </main>
 
