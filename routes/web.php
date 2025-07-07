@@ -18,6 +18,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+Route::get('/about_us', function () {
+    return Inertia::render('AboutUs');
+})->name('about_us');
 /*
 |--------------------------------------------------------------------------
 | Rutas protegidas (requieren login)

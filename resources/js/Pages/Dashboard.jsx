@@ -10,6 +10,7 @@ import OrderFilters from "../Components/UI/Dashboard/OrdersFilter";
 import OrdersTable from "../Components/UI/Dashboard/OrdersTable";
 import ModalPedido from "../Components/ModalPedido";
 import ModalProducto from "../Components/ModalProducto";
+import MainLayout from "../Layaouts/MainLayaout";
 
 const Dashboard = ({ productos, pedidos, usuarios }) => {
     const [products, setProducts] = useState(productos);
@@ -141,72 +142,67 @@ const Dashboard = ({ productos, pedidos, usuarios }) => {
     });
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50">
-            <NavBar />
-            <main className="flex-1 flex flex-col overflow-hidden p-2 sm:p-4">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 overflow-hidden">
-                    {/* Stats arriba en mobile */}
-                    <aside className="flex flex-col gap-4 lg:order-2">
-                        <StatsCard
-                            title="Productos"
-                            count={products.length}
-                            color="blue"
-                            onClick={() =>
-                                setVisibleTable((prev) =>
-                                    prev === "products" ? null : "products"
-                                )
-                            }
-                            icon={<FaBox />}
-                        />
-                        <StatsCard
-                            title="Pedidos"
-                            count={orders.length}
-                            color="green"
-                            onClick={() =>
-                                setVisibleTable((prev) =>
-                                    prev === "orders" ? null : "orders"
-                                )
-                            }
-                            icon={<IoCart />}
-                        />
-                    </aside>
+        <>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 overflow-hidden">
+                {/* Stats arriba en mobile */}
+                <aside className="flex flex-col gap-4 lg:order-2">
+                    <StatsCard
+                        title="Productos"
+                        count={products.length}
+                        color="blue"
+                        onClick={() =>
+                            setVisibleTable((prev) =>
+                                prev === "products" ? null : "products"
+                            )
+                        }
+                        icon={<FaBox />}
+                    />
+                    <StatsCard
+                        title="Pedidos"
+                        count={orders.length}
+                        color="green"
+                        onClick={() =>
+                            setVisibleTable((prev) =>
+                                prev === "orders" ? null : "orders"
+                            )
+                        }
+                        icon={<IoCart />}
+                    />
+                </aside>
 
-                    {/* Tablas */}
-                    <div className="lg:col-span-3 flex flex-col gap-4 overflow-hidden">
-                        {(visibleTable === null ||
-                            visibleTable === "products") && (
-                            <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-lg shadow">
-                                <ProductFilters onChange={setProductFilters} />
-                                <div className="flex-1">
-                                    <ProductsTable
-                                        products={filteredProducts}
-                                        onAddClick={abrirCrearProducto}
-                                        onViewClick={abrirVerProducto}
-                                        onEditClick={abrirEditarProducto}
-                                        onDeleteClick={handleDeleteProducto}
-                                    />
-                                </div>
+                {/* Tablas */}
+                <div className="lg:col-span-3 flex flex-col gap-4 overflow-hidden">
+                    {(visibleTable === null || visibleTable === "products") && (
+                        <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-lg shadow">
+                            <ProductFilters onChange={setProductFilters} />
+                            <div className="flex-1">
+                                <ProductsTable
+                                    products={filteredProducts}
+                                    onAddClick={abrirCrearProducto}
+                                    onViewClick={abrirVerProducto}
+                                    onEditClick={abrirEditarProducto}
+                                    onDeleteClick={handleDeleteProducto}
+                                />
                             </div>
-                        )}
+                        </div>
+                    )}
 
-                        {(visibleTable === null ||
-                            visibleTable === "orders") && (
-                            <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-lg shadow">
-                                <OrderFilters onChange={setOrderFilter} />
-                                <div className="flex-1">
-                                    <OrdersTable
-                                        orders={filteredOrders}
-                                        onAddClick={abrirCrearPedido}
-                                        onViewClick={abrirVerPedido}
-                                        onEditClick={abrirEditarPedido}
-                                        onDeleteClick={handleDeletePedido}
-                                    />
-                                </div>
+                    {(visibleTable === null || visibleTable === "orders") && (
+                        <div className="flex flex-col flex-1 overflow-hidden bg-white rounded-lg shadow">
+                            <OrderFilters onChange={setOrderFilter} />
+                            <div className="flex-1">
+                                <OrdersTable
+                                    orders={filteredOrders}
+                                    onAddClick={abrirCrearPedido}
+                                    onViewClick={abrirVerPedido}
+                                    onEditClick={abrirEditarPedido}
+                                    onDeleteClick={handleDeletePedido}
+                                />
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
-            </main>
+            </div>
 
             {showPedidoModal && (
                 <ModalPedido
@@ -225,8 +221,10 @@ const Dashboard = ({ productos, pedidos, usuarios }) => {
                     onClose={() => setShowProductoModal(false)}
                 />
             )}
-        </div>
+        </>
     );
 };
+
+Dashboard.layout = (page) => <MainLayout>{page}</MainLayout>;
 
 export default Dashboard;
