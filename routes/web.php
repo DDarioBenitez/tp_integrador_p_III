@@ -26,6 +26,10 @@ Route::get('/about_us', function () {
 | Rutas protegidas (requieren login)
 |--------------------------------------------------------------------------
 */
+Route::get('/about', function () {
+    return Inertia::render('About');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard', [
