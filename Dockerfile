@@ -1,31 +1,34 @@
-FROM php:8.3-fpm
+# Etapa de build
+FROM node:18 AS node-build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY resources/ resources/
+COPY webpack.mix.js ./
+RUN npm run build
 
-# Dependencias del sistema
+# Etapa de PHP
+FROM php:8.2-fpm
+
+# Instala dependencias de PHP
 RUN apt-get update && apt-get install -y \
-    git curl libpng-dev libonig-dev libxml2-dev zip unzip npm nodejs nginx supervisor
+    git \
+    unzip \
+    libzip-dev \
+    zip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo_mysql zip mbstring exif pcntl bcmath gd
 
-# Extensiones de PHP
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
-
-# Composer
+# Instala Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Config
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
-COPY ./docker/supervisord.conf /etc/supervisord.conf
+WORKDIR /app
 
-# Copia de la app
-COPY . /var/www
-WORKDIR /var/www
+COPY --from=node-build /app /app
+COPY . /app
 
-# Permisos
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage /var/www/bootstrap/cache
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Instalar dependencias
-RUN composer install --no-dev --optimize-autoloader
-RUN npm install && npm run build
-
-EXPOSE 80
-
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
